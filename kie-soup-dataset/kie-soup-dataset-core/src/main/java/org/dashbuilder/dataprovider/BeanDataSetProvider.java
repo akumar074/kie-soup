@@ -15,6 +15,8 @@
  */
 package org.dashbuilder.dataprovider;
 
+import java.util.Map;
+
 import org.dashbuilder.dataset.DataColumn;
 import org.dashbuilder.dataset.DataSet;
 import org.dashbuilder.dataset.DataSetGenerator;
@@ -72,7 +74,9 @@ public class BeanDataSetProvider implements DataSetProvider, DataSetDefRegistryL
         if ((lookup != null && lookup.testMode()) || dataSet == null) {
             BeanDataSetDef beanDef = (BeanDataSetDef) def;
             DataSetGenerator dataSetGenerator = lookupGenerator(def);
-            dataSet = dataSetGenerator.buildDataSet(beanDef.getParamaterMap());
+            Map<String, String> paramsMap = beanDef.getParamaterMap();
+            paramsMap.put("uuid", def.getUUID());
+            dataSet = dataSetGenerator.buildDataSet(paramsMap);
             dataSet.setUUID(def.getUUID());
             dataSet.setDefinition(def);
 
